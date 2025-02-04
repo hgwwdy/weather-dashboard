@@ -2,10 +2,17 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchWeather } from "../../api/weatherApi";
 
 // Async thunk to fetch weather data
-export const getWeather = createAsyncThunk("weather/fetchWeather", async (city) => {
-  const data = await fetchWeather(city);
-  return data;
-});
+export const getWeather = createAsyncThunk(
+  "weather/fetchWeather",
+  async (city, { rejectWithValue }) => {
+    try {
+      const data = await fetchWeather(city);
+      return data;
+    } catch (error) {
+      return rejectWithValue("City not found. Please try again.");
+    }
+  }
+);
 
 const weatherSlice = createSlice({
   name: "weather",
@@ -15,15 +22,16 @@ const weatherSlice = createSlice({
     builder
       .addCase(getWeather.pending, (state) => {
         state.loading = true;
-        state.error = null;
+        state.error = null; // Clear previous errors
       })
       .addCase(getWeather.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
+        state.error = null; // Clear errors on success
       })
-      .addCase(getWeather.rejected, (state) => {
+      .addCase(getWeather.rejected, (state, action) => {
         state.loading = false;
-        state.error = "Failed to fetch weather data";
+        state.error = action.payload; // Use the error message
       });
   },
 });
