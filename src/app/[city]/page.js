@@ -33,8 +33,8 @@ export default function CityWeatherPage({ params }) {
 
   return (
     <>
-    <div className="flex min-h-screen flex-col items-center bg-cover bg-center p-8" style={{ backgroundImage: "url('../assets/weather-bg.jpg')", backgroundAttachment: 'fixed' }}>
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/50"></div>
+    <div className="flex min-h-100% flex-col items-center bg-cover bg-center p-8" style={{ backgroundImage: "url('../assets/weather-bg.jpg')", backgroundAttachment: 'fixed' }}>
+      <div className="absolute   from-black/40 via-black/20 to-black/50"></div>
 
       {/* Back Button */}
       <button
