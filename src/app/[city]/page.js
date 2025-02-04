@@ -5,6 +5,7 @@ import { getWeather } from "../../redux/features/weatherSlice";
 import { useEffect, use } from "react";
 import Image from "next/image";
 import { FaMapMarkerAlt } from "react-icons/fa"; // Location icon
+import Footer from '../../components/Footer';
 
 export default function CityWeatherPage({ params }) {
   const { city } = use(params);
@@ -31,6 +32,7 @@ export default function CityWeatherPage({ params }) {
   }
 
   return (
+    <>
     <div className="flex min-h-screen flex-col items-center bg-cover bg-center p-8" style={{ backgroundImage: "url('../assets/weather-bg.jpg')", backgroundAttachment: 'fixed' }}>
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/50"></div>
 
@@ -92,5 +94,7 @@ export default function CityWeatherPage({ params }) {
 
       </div>
     </div>
+    <Footer />
+    </>
   );
 }

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getWeather } from "../redux/features/weatherSlice";
 import { useRouter } from "next/navigation"; 
 import Image from "next/image";
+import Footer from '../components/Footer';
 
 export default function Homepage() {
   const dispatch = useDispatch();
