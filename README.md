@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+SkyCast Weather App
 
-## Getting Started
+SkyCast is a simple and interactive weather forecasting web application. It allows users to check real-time weather conditions for different cities, including temperature, weather icons, and more. Built using Next.js, Redux, and OpenWeather API, this app delivers accurate and responsive weather updates.
 
-First, run the development server:
+Features
 
-```bash
+✅ Search weather for any city.
+✅ Displays current temperature and weather conditions.
+✅ Shows an error message for invalid cities instead of redirecting.
+✅ Beautiful UI with a dynamic background.
+✅ Pre-loaded weather data for some major cities.
+
+Tech Stack
+
+Frontend: Next.js, React
+
+State Management: Redux Toolkit
+
+API: OpenWeatherMap
+
+Styling: Tailwind CSS
+
+Installation & Setup
+1. git clone https://github.com/hgwwdy/weather-dashboard.git
+SkyCast Weather App
+
+SkyCast is a simple and interactive weather forecasting web application. It allows users to check real-time weather conditions for different cities, including temperature, weather icons, and more. Built using Next.js, Redux, and OpenWeather API, this app delivers accurate and responsive weather updates.
+
+Features
+
+✅ Search weather for any city.
+✅ Displays current temperature and weather conditions.
+✅ Shows an error message for invalid cities instead of redirecting.
+✅ Beautiful UI with a dynamic background.
+✅ Pre-loaded weather data for some major cities.
+
+Tech Stack
+
+Frontend: Next.js, React
+
+State Management: Redux Toolkit
+
+API: OpenWeatherMap
+
+Styling: Tailwind CSS
+
+Installation & Setup
+
+Follow these steps to run the project locally:
+
+1. Clone the Repository
+
+git clone https://github.com/your-username/skycast.git
+cd skycast
+
+2. Install Dependencies
+npm install
+
+3. Set Up Environment Variables
+
+Create a .env.local file in the root directory and add your OpenWeather API key:
+NEXT_PUBLIC_WEATHER_API_KEY=your_api_key_here
+
+4. Run the Application
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Usage
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Search for a City - Enter a city name and click the Search button.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Check Weather Details - If the city is valid, you'll be redirected to its weather page.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Error Handling - If the city is invalid, an error message will be displayed instead of redirecting.
 
-## Learn More
+Contributors
 
-To learn more about Next.js, take a look at the following resources:
+Developed by Hibst Getachew
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Contact hibstgetachew5@gmail.com
