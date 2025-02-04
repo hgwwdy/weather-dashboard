@@ -27,6 +27,6 @@ export const fetchWeather = async (city) => {
     };
   } catch (error) {
     console.error("Error fetching weather data:", error);
-    return null;  // Return null in case of error
+    return { error: error.message };  // Return null in case of error
   }
 };

@@ -3,30 +3,43 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getWeather } from "../redux/features/weatherSlice";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Footer from '../components/Footer';
+import Footer from "../components/Footer";
 
 export default function Homepage() {
   const dispatch = useDispatch();
   const weather = useSelector((state) => state.weather);
-  const [city, setCity] = useState(""); 
-  const router = useRouter(); 
+  const [city, setCity] = useState("");
+  const [error, setError] = useState(""); // State to store errors
+  const router = useRouter();
 
   useEffect(() => {
-    dispatch(getWeather("Addis Ababa")); 
+    dispatch(getWeather("Addis Ababa"));
   }, [dispatch]);
 
-  // Function to get weather for a specific city
+  // Function to get temperature data
   const getCityData = (cityName) => {
     return weather.data?.main?.temp ? weather.data.main.temp : "Loading...";
   };
 
   // Handle search functionality
   const handleSearch = () => {
-    if (city.trim() !== "") {
-      router.push(`/${city}`);
+    if (city.trim() === "") {
+      setError("Please enter a city name.");
+      return;
     }
+
+    dispatch(getWeather(city)) // Fetch the weather for the city
+      .then((response) => {
+        if (response.payload && response.payload.name) {
+          setError(""); // Clear any previous errors
+          router.push(`/${city}`); // Redirect if city is valid
+        } else {
+          setError("City not found. Please enter a valid city.");
+        }
+      })
+      .catch(() => setError("An error occurred. Please try again."));
   };
 
   return (
@@ -39,17 +52,18 @@ export default function Homepage() {
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
       </div>
 
-      {/* Logo in a standard position */}
+      {/* Logo */}
       <div className="absolute top-6 left-6 z-20">
-        <h1 className="text-3xl font-extrabold text-white drop-shadow-lg">🌤️ SkyCast</h1>
+        <h1 className="text-3xl font-extrabold text-white drop-shadow-lg">
+          🌤️ SkyCast
+        </h1>
       </div>
 
-      {/* Main content */}
+      {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center text-white px-4 py-10 w-full">
         {/* Addis Ababa Weather Card */}
         <div className="bg-gray-800 bg-opacity-70 rounded-lg p-6 mt-6 w-full max-w-sm mx-auto shadow-lg shadow-gray-900 transform transition-all duration-300 hover:scale-105">
           <div className="flex flex-col items-center">
-            {/* Weather Icon */}
             <Image
               src={`http://openweathermap.org/img/wn/${weather.data?.weather?.[0]?.icon}@2x.png`}
               alt={weather.data?.weather?.[0]?.description || "Weather icon"}
@@ -57,14 +71,17 @@ export default function Homepage() {
               height={100}
               className="mb-2"
             />
-            {/* City & Temperature */}
             <h2 className="text-2xl font-semibold text-white">Addis Ababa</h2>
-            <p className="text-4xl font-bold text-white mt-2">{getCityData("Addis Ababa")}°C</p>
+            <p className="text-4xl font-bold text-white mt-2">
+              {getCityData("Addis Ababa")}°C
+            </p>
           </div>
         </div>
 
         {/* Forecast Text and Search Section */}
-        <h2 className="text-2xl font-bold text-center text-white mt-8">Forecast your weather</h2>
+        <h2 className="text-2xl font-bold text-center text-white mt-8">
+          Forecast your weather
+        </h2>
         <div className="flex flex-col sm:flex-row items-center mt-6 space-x-0 sm:space-x-3 space-y-3 sm:space-y-0 w-full max-w-md">
           <input
             type="text"
@@ -81,12 +98,21 @@ export default function Homepage() {
           </button>
         </div>
 
-        
-        <div className="mt-20  space-y-8 text-center text-white w-full max-w-4xl">
-          
+        {/* Error Message */}
+        {error && (
+          <p className="text-red-500 mt-3 bg-red-800 px-4 py-2 rounded-md">
+            {error}
+          </p>
+        )}
+
+        {/* Other Cities */}
+        <div className="mt-20 space-y-8 text-center text-white w-full max-w-4xl">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {["Adama", "Harar", "Hawassa", "Gambela"].map((cityName) => (
-              <div key={cityName} className="bg-gray-800 bg-opacity-70 p-4 rounded-lg shadow-md">
+              <div
+                key={cityName}
+                className="bg-gray-800 bg-opacity-70 p-4 rounded-lg shadow-md"
+              >
                 <h4 className="text-lg font-semibold">{cityName}</h4>
                 <p className="text-2xl font-bold">{getCityData(cityName)}°C</p>
               </div>
