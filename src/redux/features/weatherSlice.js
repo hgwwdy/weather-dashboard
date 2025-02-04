@@ -1,37 +1,27 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { fetchWeather } from "../../api/weatherApi";
 
-// Async thunk for fetching weather data
-export const fetchWeather = createAsyncThunk(
-  "weather/fetchWeather",
-  async (city) => {
-    const API_KEY = "YOUR_API_KEY_HERE"; // Replace with your real API key
-    const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
-    );
-    const data = await response.json();
-    return data;
-  }
-);
+// Async thunk to fetch weather data
+export const getWeather = createAsyncThunk("weather/fetchWeather", async (city) => {
+  const data = await fetchWeather(city);
+  return data;
+});
 
 const weatherSlice = createSlice({
   name: "weather",
-  initialState: {
-    weatherData: null,
-    loading: false,
-    error: null,
-  },
+  initialState: { data: null, loading: false, error: null },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchWeather.pending, (state) => {
+      .addCase(getWeather.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchWeather.fulfilled, (state, action) => {
+      .addCase(getWeather.fulfilled, (state, action) => {
         state.loading = false;
-        state.weatherData = action.payload;
+        state.data = action.payload;
       })
-      .addCase(fetchWeather.rejected, (state, action) => {
+      .addCase(getWeather.rejected, (state) => {
         state.loading = false;
         state.error = "Failed to fetch weather data";
       });
